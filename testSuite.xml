@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="open-eshop tests">
+
+    <test name="login">
+        <classes>
+            <class name ="tests.LoginTest" />
+        </classes>
+    </test>
+
+    <test name="coupons">
+        <classes>
+            <class name="tests.AddCouponTest" />
+            <class name="tests.SearchCouponTest" />
+            <class name="tests.DeleteCouponTest" />
+        </classes>
+    </test>
+
+    <test name="logout">
+        <classes>
+            <class name="tests.LogoutTest" />
+        </classes>
+    </test>
+
+</suite>
