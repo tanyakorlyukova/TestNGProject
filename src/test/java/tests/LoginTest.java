@@ -12,7 +12,7 @@ public class LoginTest extends BaseTest {
     public void correctLogIn() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.logIn("demo@open-eshop.com", "demo");
-        Assert.assertEquals(loginPage.getWelcomeText(), "Welcome Admin");
+        Assert.assertEquals(loginPage.getWelcomeText(), "Welcome Admin", loginPage.getWelcomeText());
     }
 
     @Test(dataProvider = "dataForIncorrectLogIn")
@@ -20,7 +20,7 @@ public class LoginTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.logIn(email, password);
         loginPage.waitForErrorAlertDisplayed();
-        Assert.assertTrue(loginPage.isErrorContainsExpectedText("Wrong email or password"));
+        Assert.assertTrue(loginPage.isErrorContainsExpectedText("Wrong email or password"), "Error text is: " + loginPage.getErrorText());
     }
 
     @DataProvider(name = "dataForIncorrectLogIn")

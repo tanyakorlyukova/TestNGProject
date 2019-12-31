@@ -1,5 +1,6 @@
 package tests;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.CouponPage;
@@ -15,10 +16,16 @@ public class AddCouponTest extends BaseTest {
     }
 
     @Test
-    public void addCoupon() {
+    public void addCorrectCoupon(String couponName, String discountAmount, String validDate, String numberOfCoupons) {
         MainPage mainPage = new MainPage(driver);
         CouponPage couponPage = mainPage.openCouponsPage();
 
+        couponPage.addCoupon(couponName, discountAmount, validDate, numberOfCoupons);
+       // Assert.assertTrue();
+    }
+
+    @Test
+    public void addIncorrectCoupon(String couponName, String discountAmount, String validDate, String numberOfCoupons, String errorMessage) {
 
     }
 }

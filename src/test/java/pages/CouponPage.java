@@ -38,4 +38,6 @@ public class CouponPage extends BasePage{
         clickOn(deleteCouponIcon);
     }
 
+    //public void
+
 }

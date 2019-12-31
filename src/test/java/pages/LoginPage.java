@@ -3,14 +3,17 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 public class LoginPage {
 
     private By emailField = By.cssSelector("section[id='page'] input[placeholder='Email']");
     private By passwordField = By.cssSelector("section[id='page'] input[placeholder='Password']");
-    private By welcomeText = By.tagName("h1");
+    private By welcomeText = By.tagName("h21");
     private By errorAlert = By.cssSelector("section[id='page'] div[class='alert alert-danger']");
 
     private WebDriver driver;
@@ -25,7 +28,14 @@ public class LoginPage {
     }
 
     public String getWelcomeText() {
-        return driver.findElement(welcomeText).getText();
+        List<WebElement> welcome = driver.findElements(welcomeText);
+        if(welcome.size() == 1) {
+            return welcome.get(0).getText();
+        } else if (welcome.size() == 0){
+            return "Welcome message was not found. Probably, user was not logged in.";
+        } else {
+            return "Some errors in test.";
+        }
     }
 
     public void waitForErrorAlertDisplayed() {
@@ -33,7 +43,7 @@ public class LoginPage {
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(errorAlert)));
     }
 
-    private String getErrorText() {
+    public String getErrorText() {
         return driver.findElement(errorAlert).getText();
     }
 

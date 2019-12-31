@@ -1,6 +1,5 @@
 package pages;
 
-import com.sun.tools.javac.util.Convert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,5 +22,9 @@ public class BasePage {
 
     protected void enterTextIn(By locator, String text) {
         find(locator).sendKeys(text);
+    }
+
+    protected String getText(By locator) {
+        return find(locator).getText();
     }
 }
