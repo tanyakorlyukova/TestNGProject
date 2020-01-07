@@ -1,5 +1,6 @@
 package tests;
 
+import dataprovider.CouponData;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -15,17 +16,19 @@ public class AddCouponTest extends BaseTest {
         loginPage.logIn("demo@open-eshop.com", "demo");
     }
 
-    @Test
+    @Test(dataProvider = "correctCouponData", dataProviderClass = CouponData.class)
     public void addCorrectCoupon(String couponName, String discountAmount, String validDate, String numberOfCoupons) {
         MainPage mainPage = new MainPage(driver);
         CouponPage couponPage = mainPage.openCouponsPage();
-
         couponPage.addCoupon(couponName, discountAmount, validDate, numberOfCoupons);
-       // Assert.assertTrue();
+        Assert.assertTrue(couponPage.isMessageContains("Coupon " + couponName + " created"), couponPage.getAlertMessage());
     }
 
-    @Test
+    @Test(dataProvider = "incorrectCouponData", dataProviderClass = CouponData.class)
     public void addIncorrectCoupon(String couponName, String discountAmount, String validDate, String numberOfCoupons, String errorMessage) {
-
+        MainPage mainPage = new MainPage(driver);
+        CouponPage couponPage = mainPage.openCouponsPage();
+        couponPage.addCoupon(couponName, discountAmount, validDate, numberOfCoupons);
+        Assert.assertTrue(couponPage.isMessageContains(errorMessage), couponPage.getAlertMessage());
     }
 }

@@ -12,7 +12,6 @@
     <test name="coupons">
         <classes>
             <class name="tests.AddCouponTest" />
-            <class name="tests.SearchCouponTest" />
             <class name="tests.DeleteCouponTest" />
         </classes>
     </test>
