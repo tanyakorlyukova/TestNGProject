@@ -33,4 +33,8 @@ public class BasePage {
     protected String getText(By locator) {
         return find(locator).getText();
     }
+
+    protected void clear(By locator) {
+        find(locator).clear();
+    }
 }

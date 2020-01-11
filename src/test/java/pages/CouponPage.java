@@ -3,6 +3,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 public class CouponPage extends BasePage {
@@ -20,6 +22,7 @@ public class CouponPage extends BasePage {
     private By foundCoupons = By.tagName("tr");
 
     private By deleteCouponIcon = By.cssSelector("a[class='btn btn-danger index-delete']");
+    private By confirmDeletionButton = By.className("confirm");
 
     public CouponPage(WebDriver driver) {
         super(driver);
@@ -35,15 +38,22 @@ public class CouponPage extends BasePage {
     }
 
     public void searchCoupon(String couponName) {
+        clear(searchCouponInput);
         enterTextIn(searchCouponInput, couponName + Keys.ENTER);
     }
 
     public void deleteCoupon(String couponName) {
-        if(isCouponFound(couponName)) {
+        if(isCouponFound()) {
             clickOn(deleteCouponIcon);
+            clickOn(confirmDeletionButton);
         } else {
             Assert.fail("Coupon is not found!");
         }
+    }
+
+    public void waitForCouponDeleted() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.invisibilityOf(find(deleteCouponIcon)));
     }
 
     public boolean isMessageContains(String text) {
@@ -62,7 +72,7 @@ public class CouponPage extends BasePage {
         }
     }
 
-    public boolean isCouponFound(String couponName) {
+    public boolean isCouponFound() {
         if(findElements(foundCoupons).size() > 0) {
             return true;
         } else return false;
