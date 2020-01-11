@@ -9,26 +9,27 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
-public class LoginPage {
+public class LoginPage extends BasePage{
 
     private By emailField = By.cssSelector("section[id='page'] input[placeholder='Email']");
     private By passwordField = By.cssSelector("section[id='page'] input[placeholder='Password']");
-    private By welcomeText = By.tagName("h21");
+    private By welcomeText = By.tagName("h1");
     private By errorAlert = By.cssSelector("section[id='page'] div[class='alert alert-danger']");
+    private By errorLabel = By.cssSelector("label.error");
 
     private WebDriver driver;
 
     public LoginPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public void logIn(String email, String password) {
-        driver.findElement(emailField).sendKeys(email);
-        driver.findElement(passwordField).sendKeys(password + Keys.ENTER);
+        enterTextIn(emailField, email);
+        enterTextIn(passwordField,password + Keys.ENTER);
     }
 
     public String getWelcomeText() {
-        List<WebElement> welcome = driver.findElements(welcomeText);
+        List<WebElement> welcome = findElements(welcomeText);
         if(welcome.size() == 1) {
             return welcome.get(0).getText();
         } else if (welcome.size() == 0){
@@ -43,14 +44,18 @@ public class LoginPage {
         wait.until(ExpectedConditions.visibilityOf(driver.findElement(errorAlert)));
     }
 
-    public String getErrorText() {
-        return driver.findElement(errorAlert).getText();
+    public String getAlertErrorText() {
+        return getText(errorAlert);
+    }
+
+    public String getLabelErrorText() {
+        return getText(errorLabel);
     }
 
     public boolean isErrorContainsExpectedText(String expectedErrorText) {
-        if(getErrorText().contains(expectedErrorText)) {
+        if(getAlertErrorText().contains(expectedErrorText)) {
             return true;
-        }
-        else return false;
+        } else
+            return false;
     }
 }
