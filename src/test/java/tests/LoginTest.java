@@ -9,24 +9,22 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void correctLogIn() {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.logIn("demo@open-eshop.com", "demo");
-        Assert.assertEquals(loginPage.getWelcomeText(), "Welcome Admin", loginPage.getWelcomeText());
+        LoginPage loginPage = new LoginPage(driver).logIn("demo@open-eshop.com", "demo");
+        Assert.assertEquals(loginPage.getWelcomeText(), "Welcome Admin");
     }
 
     @Test(dataProvider = "dataForIncorrectLogIn")
     public void incorrectLogIn(String email, String password) {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.logIn(email, password);
-        //loginPage.waitForErrorAlertDisplayed();
+        LoginPage loginPage = new LoginPage(driver).logIn(email, password);
+        loginPage.waitForErrorAlertDisplayed();
         Assert.assertTrue(loginPage.isErrorContainsExpectedText("Wrong email or password"),
                 "Error text is: " + loginPage.getAlertErrorText());
     }
 
     @Test
     public void loginWithEmptyCredentials() {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.logIn("", "");
+        LoginPage loginPage = new LoginPage(driver).logIn("", "");
+        loginPage.waitForErrorLabelDisplayed();
         Assert.assertEquals(loginPage.getLabelErrorText(), "This field is required.");
     }
 

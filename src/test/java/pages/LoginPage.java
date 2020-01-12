@@ -23,9 +23,10 @@ public class LoginPage extends BasePage{
         super(driver);
     }
 
-    public void logIn(String email, String password) {
+    public LoginPage logIn(String email, String password) {
         enterTextIn(emailField, email);
         enterTextIn(passwordField,password + Keys.ENTER);
+        return this;
     }
 
     public String getWelcomeText() {
@@ -33,15 +34,18 @@ public class LoginPage extends BasePage{
         if(welcome.size() == 1) {
             return welcome.get(0).getText();
         } else if (welcome.size() == 0){
-            return "Welcome message was not found. Probably, user was not logged in.";
+            return "Welcome message was not found.";
         } else {
             return "Some errors in test.";
         }
     }
 
     public void waitForErrorAlertDisplayed() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(errorAlert)));
+        waitForElementDisplayed(errorAlert);
+    }
+
+    public void waitForErrorLabelDisplayed() {
+        waitForElementDisplayed(errorLabel);
     }
 
     public String getAlertErrorText() {
