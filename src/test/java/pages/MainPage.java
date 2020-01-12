@@ -18,9 +18,10 @@ public class MainPage {
         this.driver = driver;
     }
 
-    public void logOut() {
+    public MainPage logOut() {
         driver.findElement(menu).click();
         driver.findElement(logoutItem).click();
+        return this;
     }
 
     public boolean isLoginButtonDisplayed() {

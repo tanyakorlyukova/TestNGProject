@@ -10,14 +10,12 @@ public class LogoutTest extends BaseTest {
 
     @BeforeMethod
     public void login() {
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.logIn("demo@open-eshop.com", "demo");
+        LoginPage loginPage = new LoginPage(driver).logIn("demo@open-eshop.com", "demo");
     }
 
     @Test
     public void logOut() {
-        MainPage mainPage = new MainPage(driver);
-        mainPage.logOut();
+        MainPage mainPage = new MainPage(driver).logOut();
         Assert.assertTrue(mainPage.isLoginButtonDisplayed());
     }
 }
