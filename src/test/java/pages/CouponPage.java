@@ -28,8 +28,14 @@ public class CouponPage extends BasePage {
         super(driver);
     }
 
-    public void addCoupon(String couponName, String discountAmount, String validDate, String numberOfCoupons) {
+    public void openNewCouponPage() {
         clickOn(newCouponButton);
+        if(findElements(couponNameInput).size() == 0) {
+            clickOn(newCouponButton);
+        }
+    }
+
+    public void addCoupon(String couponName, String discountAmount, String validDate, String numberOfCoupons) {
         enterTextIn(couponNameInput, couponName);
         enterTextIn(discountAmountInput, discountAmount);
         enterTextIn(validDateInput, validDate);
@@ -59,7 +65,8 @@ public class CouponPage extends BasePage {
     public boolean isMessageContains(String text) {
         if(getAlertMessage().contains(text))
             return true;
-        else return false;
+        else
+            return false;
     }
 
     public String getAlertMessage() {
@@ -75,6 +82,7 @@ public class CouponPage extends BasePage {
     public boolean isCouponFound() {
         if(findElements(foundCoupons).size() > 0) {
             return true;
-        } else return false;
+        } else
+            return false;
     }
 }
