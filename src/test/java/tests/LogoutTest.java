@@ -10,7 +10,7 @@ public class LogoutTest extends BaseTest {
 
     @BeforeMethod
     public void login() {
-        LoginPage loginPage = new LoginPage(driver).logIn("demo@open-eshop.com", "demo");
+        new LoginPage(driver).logIn("demo@open-eshop.com", "demo");
     }
 
     @Test
