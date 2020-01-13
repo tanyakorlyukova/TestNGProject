@@ -7,6 +7,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.util.concurrent.TimeUnit;
+
 public class CouponPage extends BasePage {
 
     private By newCouponButton = By.cssSelector("a[class='btn btn-primary pull-right']");
@@ -43,23 +45,22 @@ public class CouponPage extends BasePage {
         clickOn(submitButton);
     }
 
-    public void searchCoupon(String couponName) {
+    public CouponPage searchCoupon(String couponName) {
         clear(searchCouponInput);
         enterTextIn(searchCouponInput, couponName + Keys.ENTER);
+        return this;
     }
 
-    public void deleteCoupon(String couponName) {
-        if(isCouponFound()) {
-            clickOn(deleteCouponIcon);
+    public CouponPage deleteCoupon(String couponName) {
+        searchCoupon(couponName);
+        clickOn(deleteCouponIcon);
+        try {
+            TimeUnit.SECONDS.sleep(1);
             clickOn(confirmDeletionButton);
-        } else {
-            Assert.fail("Coupon is not found!");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-    }
-
-    public void waitForCouponDeleted() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.invisibilityOf(find(deleteCouponIcon)));
+        return this;
     }
 
     public boolean isMessageContains(String text) {
